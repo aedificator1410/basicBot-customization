@@ -44,7 +44,19 @@
                 }
             }
         };
-
+        bot.commands.slapCommand = {
+            command: 'slap',  //The command to be called. With the standard command literal this would be: !slap
+            rank: 'bouncer', //Minimum user permission to use the command
+            type: 'startsWith', //Specify if it can accept variables or not (if so, these have to be handled yourself through the chat.message
+            functionality: function (chat, cmd) {
+                if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                if (!bot.commands.executable(this.rank, chat)) return void (0);
+                else {
+                    API.sendChat("/me got slapped by Chuck Norris!")
+                    API.sendChat("/me *** RIP *** ");
+                }
+            }
+        };
         //Load the chat package again to account for any changes
         bot.loadChat();
 
@@ -53,7 +65,7 @@
     //Change the bots default settings and make sure they are loaded on launch
 
     localStorage.setItem("basicBotsettings", JSON.stringify({
-        botName: "basicBot",
+        botName: "Botificator",
         language: "english",
         chatLink: "https://rawgit.com/Yemasthui/basicBot/master/lang/en.json",
         maximumAfk: 120,
